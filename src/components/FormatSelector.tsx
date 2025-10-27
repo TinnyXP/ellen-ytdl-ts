@@ -10,7 +10,14 @@ interface FormatSelectorProps {
   onIncludeAudioChange: (include: boolean) => void;
 }
 
-const CustomRadio = (props: any) => {
+interface CustomRadioProps {
+  value: string;
+  children?: React.ReactNode;
+  description?: string;
+  [key: string]: unknown;
+}
+
+const CustomRadio = (props: CustomRadioProps) => {
   const {
     Component,
     children,

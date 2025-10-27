@@ -1,11 +1,17 @@
 "use client";
 
 import { Slider } from "@heroui/react";
+import { ReactNode } from "react";
 
 interface QualitySelectorProps {
   format: "video" | "audio";
   quality: string;
   onQualityChange: (quality: string) => void;
+}
+
+interface CustomMark {
+  value: number;
+  label: ReactNode;
 }
 
 const videoQualities = [
@@ -38,7 +44,6 @@ export default function QualitySelector({
     onQualityChange(qualities[index].key);
   };
 
-  // ✅ JSX label + cast array ทีเดียว
   const marks = qualities.map((q, index) => {
     const [num, unit] = q.label.split(" ");
     return {
@@ -49,11 +54,10 @@ export default function QualitySelector({
             <p>{num}</p> <br/>
             {unit && <p className="text-xs/2">{unit}</p>}
           </div>
-          {/* {unit && <div className="text-xs text-default-400">{unit}</div>} */}
         </div>
       ),
     };
-  }) as unknown as any;
+  }) as CustomMark[];
 
   return (
     <div className="w-full space-y-2">
@@ -63,7 +67,7 @@ export default function QualitySelector({
           color="primary"
           size="md"
           step={1}
-          marks={marks}
+          marks={marks as never}
           value={value}
           onChange={handleChange}
           maxValue={qualities.length - 1}
